@@ -1,4 +1,4 @@
-﻿# idml2mobile
+# idml2mobile
 
 Convert a **double-column IDML / InDesign package** into a **single-column,
 mobile-friendly PDF** that opens on any phone with **no horizontal scrolling**.
@@ -32,6 +32,44 @@ convert  â†’  index.html + css/ + images/ + fonts/ + mobile.pdf + qa-report
 
 ---
 
+## Quick start for users
+
+### Windows desktop app
+
+1. Install Python 3.9 or newer.
+2. Download the repository from **Code → Download ZIP**, or clone it:
+
+```powershell
+git clone https://github.com/shravankumar1-afk/idml-mobile-reflow.git
+cd idml-mobile-reflow
+python -m pip install -e ".[dev]"
+playwright install chromium
+```
+
+3. Launch the GUI:
+
+```powershell
+idml2mobile-gui
+```
+
+Choose the IDML package folder (or `.idml` file), select a separate output folder, keep **reflow (editable)** selected, and click **Convert**. The output package contains `index.html`, `mobile.pdf`, assets, `qa-report.json`, and `stats.json`.
+
+### Command line
+
+```powershell
+idml2mobile convert "C:\path\to\book-folder" --out "C:\path\to\mobile-output" --mode reflow
+```
+
+Use `--no-pdf` when only HTML/QA output is needed. Use `--mode facsimile` for page-faithful image output when text editability is not required.
+
+### Preview the HTML locally
+
+```powershell
+cd C:\path\to\mobile-output
+python -m http.server 8000
+```
+
+Open `http://localhost:8000` in a browser.
 ## Install
 
 ```bash
