@@ -1,0 +1,51 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+.env
+
+# Tooling
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Tool output
+output/
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Large sample inputs (keep repo light; ship a tiny fixture instead)
+/01_Solution Folder/
+
+# Generated mobile packages (do not commit source-derived/copyrighted content)
+*-mobile output/
+*-mobile output v2/
+*-mobile output v2-pdf/
+reflow_latest/
+assets/generated/
+
+
+*- mobile output*/
+*-mobile output*/
+reflow_latest/
+
+
+# Generated conversion packages (do not commit source/customer content)
+01_Solution Folder - mobile output*/
+reflow_latest/
+output-*/
+**/mobile output/
+*.idml
+*.indd
+*.pdf
+

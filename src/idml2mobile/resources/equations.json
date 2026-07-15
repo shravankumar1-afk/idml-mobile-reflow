@@ -1,0 +1,9 @@
+{
+  "_comment": "MathType equation basename -> LaTeX. Value is a LaTeX string or {latex, display}. Any equation not listed falls back to its original image. Edit one line to correct a single equation.",
+  "equations": {
+    "eqn-jee_m-437.wmf": "=\\frac{\\text{mass of solute}}{(\\text{Mol. wt. of solute})}\\times 1000",
+    "eqn-jee_m-438.wmf": "\\text{Molarity}\\propto\\frac{1}{\\text{temperature}}\\propto\\frac{1}{\\text{volume}}",
+    "r203.wmf": "\\frac{\\Delta p}{p_1^{0}}=i\\,x_2,",
+    "some basic concept478.wmf": "\\dfrac{m}{\\dfrac{1000}{M_1}+m}"
+  }
+}
