@@ -81,6 +81,13 @@ class ConversionPipeline(Subject):
         if input_kind == "pdf" or (input_kind == "auto" and cfg.input_path.is_file() and cfg.input_path.suffix.lower() == ".pdf"):
             if not cfg.input_path.exists():
                 raise ValueError(f"PDF input not found: {cfg.input_path}")
+            try:
+                if out.resolve() == cfg.input_path.parent.resolve() or out.resolve() == cfg.input_path.resolve():
+                    raise ValueError("PDF output folder must be different from the source PDF folder. Choose a new subfolder, e.g. Mobile output.")
+            except ValueError:
+                raise
+            except OSError:
+                pass
             validation = ValidationResult(input_dir=cfg.input_path.parent, reference_pdf=cfg.input_path)
             result.validation = validation
             return self._convert_facsimile(validation, out, result, started)
