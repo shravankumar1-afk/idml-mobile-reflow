@@ -76,6 +76,15 @@ class ConversionPipeline(Subject):
         out = cfg.output_dir
         result = ConversionResult(output_dir=out)
 
+        # PDF input uses the source-faithful mobile renderer. IDML keeps editable reflow.
+        input_kind = getattr(cfg, "input_type", "auto")
+        if input_kind == "pdf" or (input_kind == "auto" and cfg.input_path.is_file() and cfg.input_path.suffix.lower() == ".pdf"):
+            if not cfg.input_path.exists():
+                raise ValueError(f"PDF input not found: {cfg.input_path}")
+            validation = ValidationResult(input_dir=cfg.input_path.parent, reference_pdf=cfg.input_path)
+            result.validation = validation
+            return self._convert_facsimile(validation, out, result, started)
+
         self.emit("validate", "Validating input", progress=0.0)
         validation = InputValidator().validate(cfg.input_path)
         result.validation = validation

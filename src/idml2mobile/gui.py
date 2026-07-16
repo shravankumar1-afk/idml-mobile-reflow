@@ -1,4 +1,4 @@
-"""Tiny desktop GUI launcher for idml2mobile.
+﻿"""Tiny desktop GUI launcher for idml2mobile.
 
 Double-click target for the desktop shortcut: pick an input package (folder or
 .idml) and an output folder, choose options, and Convert. The pipeline runs on
@@ -26,7 +26,7 @@ from idml2mobile.config import ConversionConfig, MobileProfile
 from idml2mobile.observers.base import Event, Level
 from idml2mobile.pipeline import ConversionPipeline
 
-APP_TITLE = "IDML → Mobile PDF"
+APP_TITLE = "IDML ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ Mobile PDF"
 STRATEGIES = ["auto", "threaded", "geometric", "story_order"]
 
 
@@ -47,6 +47,7 @@ class App:
         self.worker: threading.Thread | None = None
 
         self.input_var = StringVar()
+        self.input_type_var = StringVar(value="Auto detect")
         self.output_var = StringVar()
         # Source-faithful is the production default: it preserves every font,
         # box, diagram, equation, table and word from the print PDF. Semantic
@@ -59,7 +60,7 @@ class App:
         self.open_var = BooleanVar(value=True)
 
         root.title(APP_TITLE)
-        root.geometry("720x560")
+        root.geometry("720x600")
         root.minsize(640, 480)
         self._build()
         self.root.after(120, self._drain)
@@ -71,19 +72,23 @@ class App:
         frm.pack(fill="both", expand=True)
         frm.columnconfigure(1, weight=1)
 
-        ttk.Label(frm, text="Input (.idml or package folder)").grid(row=0, column=0, sticky="w", **pad)
-        ttk.Entry(frm, textvariable=self.input_var).grid(row=0, column=1, sticky="ew", **pad)
+        ttk.Label(frm, text="Input type").grid(row=0, column=0, sticky="w", **pad)
+        ttk.Combobox(frm, textvariable=self.input_type_var, values=["Auto detect", "IDML", "PDF"], state="readonly", width=12).grid(row=0, column=1, sticky="w", **pad)
+        ttk.Label(frm, text="Input (.idml, PDF, or package folder)").grid(row=1, column=0, sticky="w", **pad)
+        ttk.Entry(frm, textvariable=self.input_var).grid(row=1, column=1, sticky="ew", **pad)
         btns = ttk.Frame(frm)
-        btns.grid(row=0, column=2, sticky="e", **pad)
-        ttk.Button(btns, text="Folder…", command=self._pick_input_folder).pack(side="left")
-        ttk.Button(btns, text=".idml…", command=self._pick_input_file).pack(side="left", padx=(4, 0))
+        btns.grid(row=1, column=2, sticky="e", **pad)
+        ttk.Button(btns, text="Folder...", command=self._pick_input_folder).pack(side="left")
+        ttk.Button(btns, text=".idml...", command=self._pick_input_file).pack(side="left", padx=(4, 0))
+        ttk.Button(btns, text="PDF...", command=self._pick_input_pdf).pack(side="left", padx=(4, 0))
 
-        ttk.Label(frm, text="Output folder").grid(row=1, column=0, sticky="w", **pad)
-        ttk.Entry(frm, textvariable=self.output_var).grid(row=1, column=1, sticky="ew", **pad)
-        ttk.Button(frm, text="Browse…", command=self._pick_output).grid(row=1, column=2, sticky="e", **pad)
+        ttk.Label(frm, text="Output folder").grid(row=2, column=0, sticky="w", **pad)
+        ttk.Entry(frm, textvariable=self.output_var).grid(row=2, column=1, sticky="ew", **pad)
+        ttk.Button(frm, text="Browse...", command=self._pick_output).grid(row=2, column=2, sticky="e", **pad)
+
 
         opts = ttk.LabelFrame(frm, text="Options", padding=8)
-        opts.grid(row=2, column=0, columnspan=3, sticky="ew", **pad)
+        opts.grid(row=3, column=0, columnspan=3, sticky="ew", **pad)
         ttk.Label(opts, text="Mode").pack(side="left")
         ttk.Combobox(
             opts, textvariable=self.mode_var,
@@ -101,7 +106,7 @@ class App:
         ttk.Checkbutton(opts, text="Open output when done", variable=self.open_var).pack(side="left", padx=4)
 
         actions = ttk.Frame(frm)
-        actions.grid(row=3, column=0, columnspan=3, sticky="ew", **pad)
+        actions.grid(row=4, column=0, columnspan=3, sticky="ew", **pad)
         self.convert_btn = ttk.Button(actions, text="Convert", command=self._start)
         self.convert_btn.pack(side="left")
         self.progress = ttk.Progressbar(actions, mode="indeterminate", length=220)
@@ -109,11 +114,11 @@ class App:
         self.status = ttk.Label(actions, text="Ready")
         self.status.pack(side="left")
 
-        ttk.Label(frm, text="Log").grid(row=4, column=0, sticky="w", **pad)
+        ttk.Label(frm, text="Log").grid(row=5, column=0, sticky="w", **pad)
         self.log = ScrolledText(frm, height=16, wrap="word", state="disabled",
                                 font=("Consolas", 9))
-        self.log.grid(row=5, column=0, columnspan=3, sticky="nsew", **pad)
-        frm.rowconfigure(5, weight=1)
+        self.log.grid(row=6, column=0, columnspan=3, sticky="nsew", **pad)
+        frm.rowconfigure(6, weight=1)
 
     # -- pickers -----------------------------------------------------------
     def _pick_input_folder(self) -> None:
@@ -122,6 +127,14 @@ class App:
             self.input_var.set(d)
             if not self.output_var.get():
                 self.output_var.set(self._default_output(Path(d)))
+
+    def _pick_input_pdf(self) -> None:
+        f = filedialog.askopenfilename(title="Select a PDF", filetypes=[("PDF", "*.pdf"), ("All files", "*.*")])
+        if f:
+            self.input_var.set(f)
+            self.input_type_var.set("PDF")
+            if not self.output_var.get():
+                self.output_var.set(self._default_output(Path(f)))
 
     def _pick_input_file(self) -> None:
         f = filedialog.askopenfilename(title="Select an .idml file",
@@ -148,7 +161,7 @@ class App:
         inp = self.input_var.get().strip()
         out = self.output_var.get().strip()
         if not inp or not Path(inp).exists():
-            messagebox.showerror(APP_TITLE, "Please choose a valid input .idml or package folder.")
+            messagebox.showerror(APP_TITLE, "Please choose a valid IDML, PDF, or package folder.")
             return
         if not out:
             messagebox.showerror(APP_TITLE, "Please choose an output folder.")
@@ -159,7 +172,7 @@ class App:
         self._clear_log()
         self.convert_btn.config(state="disabled")
         self.progress.start(12)
-        self.status.config(text="Converting…")
+        self.status.config(text="ConvertingÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦")
 
         config = ConversionConfig(
             input_path=Path(inp),
@@ -167,6 +180,7 @@ class App:
             profile=MobileProfile(),
             mode=("reflow" if self.mode_var.get().startswith("reflow")
                   else "facsimile"),
+            input_type={"PDF": "pdf", "IDML": "idml"}.get(self.input_type_var.get(), "auto"),
             reading_order_strategy=self.strategy_var.get(),
             embed_fonts=self.fonts_var.get(),
             recover_visuals=self.visuals_var.get(),
@@ -207,22 +221,13 @@ class App:
             self._append(f"[done] Output ready: {event.message}", event.level)
             if stats:
                 self._append(
-                    "-" * 48 + "\n"
-                    f"  Time taken     : {stats.get('elapsed_human', '?')}\n"
                     f"  Tokens (est.)  : {stats.get('text_tokens_est', 0):,}  "
-                    f"(offline - no LLM tokens used)\n"
-                    f"  Words / chars  : {stats.get('words', 0):,} / {stats.get('characters', 0):,}\n"
-                    f"  Pages          : {stats.get('pages', 0)}\n"
-                    f"  Sections       : {stats.get('sections', 0)}\n"
-                    f"  Equations      : {stats.get('equations', 0)}\n"
-                    f"  Images placed  : {stats.get('images_placed', 0)} / {stats.get('assets_total', 0)}\n"
                     + "-" * 48
                 )
             return
         if event.stage == "__error__":
             self._finish(success=False, output="")
             self._append(f"[error] {event.message}", Level.ERROR)
-            messagebox.showerror(APP_TITLE, f"Conversion failed:\n{event.message}")
             return
         pct = f" {event.progress * 100:5.1f}%" if event.progress is not None else ""
         self._append(f"[{event.stage}]{pct} {event.message}", event.level)
@@ -241,7 +246,6 @@ class App:
     # -- helpers -----------------------------------------------------------
     def _append(self, text: str, level: Level = Level.INFO) -> None:
         self.log.config(state="normal")
-        self.log.insert("end", text + "\n")
         self.log.see("end")
         self.log.config(state="disabled")
 
@@ -286,3 +290,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+

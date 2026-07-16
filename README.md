@@ -6,11 +6,11 @@ mobile-friendly PDF** that opens on any phone with **no horizontal scrolling**.
 The tool unpacks the IDML, reconstructs the reading order across threaded and
 double-column frames, reflows everything into one narrow column, converts
 unsupported link assets (EPS/WMF/TIF/CDR) to web-safe PNG, preserves math
-(as readable text with real sub/superscripts, or the original equation image ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â never raw LaTeX), and renders a
-fixed **360 px-wide** mobile PDF with Playwright Chromium ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â then runs QA.
+(as readable text with real sub/superscripts, or the original equation image ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â never raw LaTeX), and renders a
+fixed **360 px-wide** mobile PDF with Playwright Chromium ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â then runs QA.
 
 ```
-convert  ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢  index.html + css/ + images/ + fonts/ + mobile.pdf + qa-report.json
+convert  ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢  index.html + css/ + images/ + fonts/ + mobile.pdf + qa-report.json
 ```
 
 ---
@@ -23,8 +23,8 @@ convert  ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢  index.html + css/ + images/ 
 | Page height | 780 px fixed, or auto-paginated (default) |
 | Margin | 16 px |
 | Safe content width | **328 px** |
-| Body font | 15ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“16 px (min 13 px) |
-| Line height | 1.45ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“1.6 |
+| Body font | 15ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œ16 px (min 13 px) |
+| Line height | 1.45ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œ1.6 |
 | Columns | **single column only** |
 | Images | `max-width: 100%`, never cropped |
 | Overflow | none horizontally |
@@ -37,7 +37,7 @@ convert  ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢  index.html + css/ + images/ 
 ### Windows desktop app
 
 1. Install Python 3.9 or newer.
-2. Download the repository from **Code Ã¢â€ â€™ Download ZIP**, or clone it:
+2. Download the repository from **Code ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ Download ZIP**, or clone it:
 
 ```powershell
 git clone https://github.com/shravankumar1-afk/idml-mobile-reflow.git
@@ -54,10 +54,12 @@ idml2mobile-gui
 
 Choose the IDML package folder (or `.idml` file), select a separate output folder, keep **reflow (editable)** selected, and click **Convert**. The output package contains `index.html`, `mobile.pdf`, `css/`, `js/`, `images/`, `fonts/`, `katex/`, `qa-report.json`, and `stats.json`.
 
+PDF input is supported from the GUI dropdown or CLI. Text-based PDFs can use source-faithful rendering; scanned/image-only PDFs are preserved as mobile page images. Editable OCR reflow is not enabled by default.
+
 ### Command line
 
 ```powershell
-idml2mobile convert "C:\path\to\book-folder" --out "C:\path\to\mobile-output" --mode reflow
+idml2mobile convert "C:\path\to\book-folder-or-file.pdf" --out "C:\path\to\mobile-output" --mode reflow
 ```
 
 Use `--no-pdf` when only HTML/QA output is needed. Use `--mode facsimile` for page-faithful image output when text editability is not required.
@@ -87,8 +89,8 @@ playwright install chromium
 ```
 
 **Optional external converters** (only needed for EPS / CDR / AI):
-- **Ghostscript** ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â lets Pillow rasterize EPS.
-- **ImageMagick** (`magick`) or **Inkscape** ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â fallback for vector formats.
+- **Ghostscript** ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â lets Pillow rasterize EPS.
+- **ImageMagick** (`magick`) or **Inkscape** ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â fallback for vector formats.
 
 WMF/EMF equations convert natively via Pillow on Windows; elsewhere they use
 ImageMagick/Inkscape. Anything that cannot be converted is reported in
@@ -104,7 +106,7 @@ Prefer a double-click? After installing, create a Desktop shortcut with an icon:
 powershell -ExecutionPolicy Bypass -File scripts\create_shortcut.ps1
 ```
 
-This adds **ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œIDML to Mobile PDFÃƒÂ¢Ã¢â€šÂ¬Ã‚Â** to your Desktop. Double-click it to open a
+This adds **ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã¢â‚¬Å“IDML to Mobile PDFÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â** to your Desktop. Double-click it to open a
 small window: pick the input `.idml`/package folder and an output folder, choose
 options (reading order, render PDF, embed fonts), and click **Convert**. Progress
 streams into the log and the output folder opens when it finishes.
@@ -123,7 +125,7 @@ idml2mobile convert "01_Solution Folder" --out output/
 
 # Two output styles:
 #   --mode reflow     (default) single-column, selectable, mobile-readable text
-#   --mode facsimile  each source page rendered 1:1 to mobile width ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â a 100%
+#   --mode facsimile  each source page rendered 1:1 to mobile width ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â a 100%
 #                     visual match to the source (all images/fonts/boxes), but
 #                     the text is an image (not selectable) and smaller.
 idml2mobile convert "01_Solution Folder" --out facsimile/ --mode facsimile
@@ -149,7 +151,7 @@ Useful `convert` flags:
 | `--body-font 16 --margin 16 --page-width 360` | override the profile |
 | `--keep-temp -v` | keep the unpacked IDML and log verbosely |
 
-Exit codes: `0` success Ãƒâ€šÃ‚Â· `2` completed but QA flagged errors Ãƒâ€šÃ‚Â· `1` failure.
+Exit codes: `0` success ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â· `2` completed but QA flagged errors ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â· `1` failure.
 
 ---
 
@@ -157,16 +159,16 @@ Exit codes: `0` success Ãƒâ€šÃ‚Â· `2` completed but QA flagged errors
 
 ```
 output/
-ÃƒÂ¢Ã¢â‚¬ÂÃ…â€œÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ index.html          # mobile-first, single column
-ÃƒÂ¢Ã¢â‚¬ÂÃ…â€œÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ css/styles.css       # generated from the mobile profile
-ÃƒÂ¢Ã¢â‚¬ÂÃ…â€œÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ images/              # web-safe PNGs (converted from EPS/WMF/TIF/...)
-ÃƒÂ¢Ã¢â‚¬ÂÃ…â€œÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ fonts/               # embedded Document fonts (if licensed)
-ÃƒÂ¢Ã¢â‚¬ÂÃ…â€œÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ mobile.pdf           # 360 px-wide mobile PDF
-ÃƒÂ¢Ã¢â‚¬ÂÃ…â€œÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ qa-report.json       # pass/fail per check
-ÃƒÂ¢Ã¢â‚¬ÂÃ¢â‚¬ÂÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ stats.json           # time + tokens/words/pages/images processed
+ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒâ€¦Ã¢â‚¬Å“ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ index.html          # mobile-first, single column
+ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒâ€¦Ã¢â‚¬Å“ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ css/styles.css       # generated from the mobile profile
+ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒâ€¦Ã¢â‚¬Å“ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ images/              # web-safe PNGs (converted from EPS/WMF/TIF/...)
+ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒâ€¦Ã¢â‚¬Å“ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ fonts/               # embedded Document fonts (if licensed)
+ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒâ€¦Ã¢â‚¬Å“ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ mobile.pdf           # 360 px-wide mobile PDF
+ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒâ€¦Ã¢â‚¬Å“ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ qa-report.json       # pass/fail per check
+ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ stats.json           # time + tokens/words/pages/images processed
 ```
 
-You can point the tool at **any folder** ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â if the `.idml` package sits in a
+You can point the tool at **any folder** ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â if the `.idml` package sits in a
 subfolder, it is found automatically. Each run reports elapsed **time** and an
 estimate of the **tokens** (text volume) processed. The conversion is fully
 offline, so "tokens" is an estimate of processed text (~4 chars/token), not LLM
@@ -182,21 +184,21 @@ same content model can target HTML, PDF, or a future format.
 
 ```
 CLI (Command)                 observers/ (Observer: progress + logging)
-   ÃƒÂ¢Ã¢â‚¬ÂÃ¢â‚¬Å¡
-   ÃƒÂ¢Ã¢â‚¬â€œÃ‚Â¼
+   ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡
+   ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“Ãƒâ€šÃ‚Â¼
 ConversionPipeline (Facade)
-   ÃƒÂ¢Ã¢â‚¬ÂÃ¢â‚¬Å¡
-   ÃƒÂ¢Ã¢â‚¬ÂÃ…â€œÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ InputValidator ............ detect .idml / Links / fonts / missing refs
-   ÃƒÂ¢Ã¢â‚¬ÂÃ…â€œÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ IDMLPackage ............... unzip, expose designmap / Stories / Spreads
-   ÃƒÂ¢Ã¢â‚¬ÂÃ…â€œÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ ParserFactory ............. StoryParser Ãƒâ€šÃ‚Â· SpreadParser Ãƒâ€šÃ‚Â· ResourceParser
-   ÃƒÂ¢Ã¢â‚¬ÂÃ…â€œÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ IDMLAdapter (Adapter) ..... raw IDML records ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ semantic blocks
-   ÃƒÂ¢Ã¢â‚¬ÂÃ…â€œÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ ReadingOrderStrategy ...... threaded | geometric | story_order | auto
-   ÃƒÂ¢Ã¢â‚¬ÂÃ…â€œÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ CleanupChain (CoR) ........ normalize Ãƒâ€šÃ‚Â· merge Ãƒâ€šÃ‚Â· drop-empty Ãƒâ€šÃ‚Â· dedup
-   ÃƒÂ¢Ã¢â‚¬ÂÃ…â€œÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ DocumentBuilder (Builder) . blocks ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ Document > Section > Block (Composite)
-   ÃƒÂ¢Ã¢â‚¬ÂÃ…â€œÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ AssetRepository (Repository) locate + convert links, cache, track origin
-   ÃƒÂ¢Ã¢â‚¬ÂÃ…â€œÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ RendererFactory ........... HTMLRenderer / PDFRenderer (Template Method)
-   ÃƒÂ¢Ã¢â‚¬ÂÃ¢â‚¬Å¡     ÃƒÂ¢Ã¢â‚¬ÂÃ¢â‚¬ÂÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ StyleBuilder (Builder) mobile CSS from MobileProfile
-   ÃƒÂ¢Ã¢â‚¬ÂÃ¢â‚¬ÂÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ QAValidator ............... static + rendered-DOM checks ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ qa-report.json
+   ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡
+   ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒâ€¦Ã¢â‚¬Å“ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ InputValidator ............ detect .idml / Links / fonts / missing refs
+   ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒâ€¦Ã¢â‚¬Å“ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ IDMLPackage ............... unzip, expose designmap / Stories / Spreads
+   ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒâ€¦Ã¢â‚¬Å“ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ ParserFactory ............. StoryParser ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â· SpreadParser ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â· ResourceParser
+   ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒâ€¦Ã¢â‚¬Å“ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ IDMLAdapter (Adapter) ..... raw IDML records ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ semantic blocks
+   ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒâ€¦Ã¢â‚¬Å“ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ ReadingOrderStrategy ...... threaded | geometric | story_order | auto
+   ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒâ€¦Ã¢â‚¬Å“ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ CleanupChain (CoR) ........ normalize ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â· merge ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â· drop-empty ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â· dedup
+   ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒâ€¦Ã¢â‚¬Å“ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ DocumentBuilder (Builder) . blocks ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ Document > Section > Block (Composite)
+   ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒâ€¦Ã¢â‚¬Å“ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ AssetRepository (Repository) locate + convert links, cache, track origin
+   ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒâ€¦Ã¢â‚¬Å“ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ RendererFactory ........... HTMLRenderer / PDFRenderer (Template Method)
+   ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡     ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ StyleBuilder (Builder) mobile CSS from MobileProfile
+   ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ QAValidator ............... static + rendered-DOM checks ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ qa-report.json
 ```
 
 ### Design-pattern map
@@ -204,7 +206,7 @@ ConversionPipeline (Facade)
 | Pattern | Where |
 |---|---|
 | **Facade** | `ConversionPipeline` |
-| **Adapter** | `IDMLAdapter` (IDML XML ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ internal model) |
+| **Adapter** | `IDMLAdapter` (IDML XML ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ internal model) |
 | **Composite** | `Document > Section > Block` (`model/blocks.py`) |
 | **Repository** | `AssetRepository` |
 | **Bridge** | content model (`model/`) decoupled from renderers (`render/`) |
@@ -221,11 +223,11 @@ ConversionPipeline (Facade)
 ## How it handles real InDesign quirks
 
 - **Threaded + double-column frames** are resolved by absolute frame geometry
-  (`ItemTransform` applied to `GeometricBounds`), ordered page ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ left column ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢
-  right column ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ top-to-bottom, with each story emitted once even when it spans
+  (`ItemTransform` applied to `GeometricBounds`), ordered page ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ left column ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢
+  right column ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ top-to-bottom, with each story emitted once even when it spans
   many frames.
 - **Anchored equations** (MathType exports as inline WMF/EPS inside the story)
-  are kept **inline, in place** ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â converted to PNG and constrained to the safe
+  are kept **inline, in place** ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â converted to PNG and constrained to the safe
   width so they never clip. Image-only equation paragraphs become centered
   display blocks.
 - **Broken paragraphs** split across frames are re-joined by the cleanup chain.
@@ -238,14 +240,14 @@ ConversionPipeline (Facade)
 
 ```
 idml2mobile/
-ÃƒÂ¢Ã¢â‚¬ÂÃ…â€œÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ pyproject.toml
-ÃƒÂ¢Ã¢â‚¬ÂÃ…â€œÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ README.md Ãƒâ€šÃ‚Â· LICENSE Ãƒâ€šÃ‚Â· .gitignore
-ÃƒÂ¢Ã¢â‚¬ÂÃ…â€œÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ .github/workflows/ci.yml
-ÃƒÂ¢Ã¢â‚¬ÂÃ…â€œÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ src/idml2mobile/
-ÃƒÂ¢Ã¢â‚¬ÂÃ¢â‚¬Å¡  ÃƒÂ¢Ã¢â‚¬ÂÃ…â€œÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ cli.py Ãƒâ€šÃ‚Â· config.py Ãƒâ€šÃ‚Â· pipeline.py
-ÃƒÂ¢Ã¢â‚¬ÂÃ¢â‚¬Å¡  ÃƒÂ¢Ã¢â‚¬ÂÃ…â€œÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ observers/ Ãƒâ€šÃ‚Â· commands/ Ãƒâ€šÃ‚Â· idml/ Ãƒâ€šÃ‚Â· parsers/ Ãƒâ€šÃ‚Â· model/
-ÃƒÂ¢Ã¢â‚¬ÂÃ¢â‚¬Å¡  ÃƒÂ¢Ã¢â‚¬ÂÃ…â€œÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ reading_order/ Ãƒâ€šÃ‚Â· cleanup/ Ãƒâ€šÃ‚Â· mathconv/ Ãƒâ€šÃ‚Â· assets/ Ãƒâ€šÃ‚Â· render/ Ãƒâ€šÃ‚Â· qa/
-ÃƒÂ¢Ã¢â‚¬ÂÃ¢â‚¬ÂÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ tests/
+ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒâ€¦Ã¢â‚¬Å“ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ pyproject.toml
+ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒâ€¦Ã¢â‚¬Å“ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ README.md ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â· LICENSE ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â· .gitignore
+ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒâ€¦Ã¢â‚¬Å“ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ .github/workflows/ci.yml
+ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒâ€¦Ã¢â‚¬Å“ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ src/idml2mobile/
+ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡  ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒâ€¦Ã¢â‚¬Å“ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ cli.py ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â· config.py ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â· pipeline.py
+ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡  ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒâ€¦Ã¢â‚¬Å“ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ observers/ ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â· commands/ ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â· idml/ ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â· parsers/ ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â· model/
+ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡  ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒâ€¦Ã¢â‚¬Å“ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ reading_order/ ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â· cleanup/ ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â· mathconv/ ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â· assets/ ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â· render/ ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â· qa/
+ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ tests/
 ```
 
 ---
@@ -263,7 +265,7 @@ not require the multi-MB sample or Chromium.
 
 ## License
 
-MIT ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â see [LICENSE](LICENSE). Embedding fonts from `Document fonts/` is gated by
+MIT ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â see [LICENSE](LICENSE). Embedding fonts from `Document fonts/` is gated by
 `--no-fonts`; you are responsible for honoring each font's license.
 
 
