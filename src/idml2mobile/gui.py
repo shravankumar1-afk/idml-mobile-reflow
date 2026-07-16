@@ -167,11 +167,11 @@ class App:
             messagebox.showerror(APP_TITLE, "Please choose an output folder.")
             return
         if self.worker and self.worker.is_alive():
+            return
         if Path(out).exists() and any(Path(out).iterdir()):
             self._append("[error] Output folder is not empty. Choose a new empty folder.", Level.ERROR)
             messagebox.showerror(APP_TITLE, "Choose a new empty output folder.")
-            return            return
-
+            return
         self._clear_log()
         self.convert_btn.config(state="disabled")
         self.progress.start(12)
@@ -295,6 +295,7 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
 
 
 
