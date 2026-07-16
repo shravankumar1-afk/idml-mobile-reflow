@@ -1,4 +1,4 @@
-"""Facsimile renderer — a pixel-faithful mobile PDF.
+﻿"""Facsimile renderer â€” a pixel-faithful mobile PDF.
 
 Renders every source (print) PDF page to a high-res image so the output matches
 the source 100% (all images, fonts, boxes, diagrams). Two layouts:
@@ -7,7 +7,7 @@ the source 100% (all images, fonts, boxes, diagrams). Two layouts:
 * single-column: detect the two-column gutter, crop each column, and stack them
                  vertically (left then right). The content becomes single column
                  AND the text roughly doubles in size (each column fills the
-                 mobile width) — still a 100% visual match, just reflowed by
+                 mobile width) â€” still a 100% visual match, just reflowed by
                  column. Full-width pages (no clear gutter) are kept whole.
 
 Text remains an image (not selectable). Requires the print PDF and PyMuPDF.
@@ -83,6 +83,15 @@ class FacsimileRenderer:
 
     # -- column detection --------------------------------------------------
     def _column_clips(self, fitz, page):
+        # Preserve full-page scanned artwork; column detection would crop it.
+        try:
+            page_images = page.get_images(full=True)
+            words = page.get_text("words")
+            if len(page_images) == 1 and not words:
+                return [page.rect]
+        except Exception:
+            pass
+
         """Return full-height left/right clips when PDF text geometry proves
         that the page has two independent columns; otherwise return the whole
         page. Full-height clips deliberately retain every diagram, table, rule,
@@ -98,7 +107,7 @@ class FacsimileRenderer:
 
         """Raster fallback for pages whose live text is unavailable.
 
-        Detection keys on DARK TEXT pixels, not brightness — the pages have a
+        Detection keys on DARK TEXT pixels, not brightness â€” the pages have a
         full blue background, so a white-gutter test fails; instead the gutter is
         the central column band that contains (almost) no dark text.
         """
