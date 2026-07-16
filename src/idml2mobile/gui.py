@@ -1,4 +1,4 @@
-﻿"""Tiny desktop GUI launcher for idml2mobile.
+"""Tiny desktop GUI launcher for idml2mobile.
 
 Double-click target for the desktop shortcut: pick an input package (folder or
 .idml) and an output folder, choose options, and Convert. The pipeline runs on
@@ -26,7 +26,7 @@ from idml2mobile.config import ConversionConfig, MobileProfile
 from idml2mobile.observers.base import Event, Level
 from idml2mobile.pipeline import ConversionPipeline
 
-APP_TITLE = "IDML ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ Mobile PDF"
+APP_TITLE = "IDML -> Mobile PDF"
 STRATEGIES = ["auto", "threaded", "geometric", "story_order"]
 
 
@@ -172,7 +172,7 @@ class App:
         self._clear_log()
         self.convert_btn.config(state="disabled")
         self.progress.start(12)
-        self.status.config(text="ConvertingÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦")
+        self.status.config(text="Converting...")
 
         config = ConversionConfig(
             input_path=Path(inp),
