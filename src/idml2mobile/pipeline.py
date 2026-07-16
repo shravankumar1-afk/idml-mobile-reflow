@@ -230,7 +230,9 @@ class ConversionPipeline(Subject):
             )
         self.emit("facsimile", "Rendering source pages to mobile-width images",
                   progress=0.2)
-        info = FacsimileRenderer(self.profile).build(validation.reference_pdf, out)
+        def _pdf_progress(page, total, tiles):
+            self.emit("facsimile", f"Rendered PDF page {page}/{total} ({tiles} mobile tiles)", progress=page / max(1, total))
+        info = FacsimileRenderer(self.profile).build(validation.reference_pdf, out, progress_callback=_pdf_progress)
         result.html_path = out / "index.html"
         self.emit("facsimile", f"Rendered {info['pages']} pages", progress=0.9)
 

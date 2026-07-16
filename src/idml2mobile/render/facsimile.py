@@ -30,7 +30,7 @@ class FacsimileRenderer:
         self.single_column = single_column
 
     # -- public ------------------------------------------------------------
-    def build(self, source_pdf: Path, out_dir: Path) -> Dict:
+    def build(self, source_pdf: Path, out_dir: Path, progress_callback=None) -> Dict:
         import fitz  # PyMuPDF
 
         out_dir = Path(out_dir)
@@ -70,6 +70,8 @@ class FacsimileRenderer:
                         new_page.rect, src, i, clip=clip, keep_proportion=False
                     )
                     tiles += 1
+                if progress_callback:
+                    progress_callback(i + 1, src.page_count, tiles)
             out_pdf.save(str(out_dir / "mobile.pdf"), deflate=True, garbage=4)
             pages = src.page_count
         finally:
