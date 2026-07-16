@@ -246,7 +246,7 @@ class App:
 
     # -- helpers -----------------------------------------------------------
     def _append(self, text: str, level: Level = Level.INFO) -> None:
-        self.log.config(state="normal")
+        self.log.config(state="normal")        self.log.insert("end", text + "\n")
         self.log.see("end")
         self.log.config(state="disabled")
 
@@ -291,5 +291,6 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
 
 
