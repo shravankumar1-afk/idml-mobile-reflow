@@ -88,6 +88,8 @@ class ConversionPipeline(Subject):
                 raise
             except OSError:
                 pass
+            out.mkdir(parents=True, exist_ok=True)
+            self.emit("validate", f"PDF input validated: {cfg.input_path.name}", progress=1.0)
             validation = ValidationResult(input_dir=cfg.input_path.parent, reference_pdf=cfg.input_path)
             result.validation = validation
             return self._convert_facsimile(validation, out, result, started)
