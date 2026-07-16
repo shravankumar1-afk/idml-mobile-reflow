@@ -1,4 +1,4 @@
-"""Tiny desktop GUI launcher for idml2mobile.
+﻿"""Tiny desktop GUI launcher for idml2mobile.
 
 Double-click target for the desktop shortcut: pick an input package (folder or
 .idml) and an output folder, choose options, and Convert. The pipeline runs on
@@ -172,7 +172,8 @@ class App:
         self._clear_log()
         self.convert_btn.config(state="disabled")
         self.progress.start(12)
-        self.status.config(text="Converting...")
+        self.status.config(text="Converting...")        # Immediate feedback while a large PDF is parsed.
+        self._append(f"[start] Input type: {self.input_type_var.get()} | Input: {inp}")
 
         config = ConversionConfig(
             input_path=Path(inp),
@@ -290,4 +291,5 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
 
